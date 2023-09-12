@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ButtonLg from "./Button/ButtonLg";
 
 const Hero = () => {
@@ -16,8 +17,12 @@ const Hero = () => {
           journey.
         </p>
         <div className="flex flex-row space-x-3 mt-2">
-          <ButtonLg title="Login in" />
-          <ButtonLg title="Sign in" />
+          <Link to="/login">
+            <ButtonLg title="Log in" />
+          </Link>
+          <Link to="/sign">
+            <ButtonLg title="Sign in" />
+          </Link>
         </div>
       </div>
       <div>
