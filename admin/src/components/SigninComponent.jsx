@@ -12,19 +12,6 @@ const SigninComponent = () => {
             <center className="text-2xl font-semibold mb-4">Sign In</center>
             <form>
               <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-600">
-                  Name
-                </label>
-                <input
-                  type="name"
-                  id="name"
-                  name="name"
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                  placeholder="Enter your name"
-                  required
-                />
-              </div>
-              <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-600">
                   Email
                 </label>

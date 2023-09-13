@@ -1,6 +1,8 @@
 import ButtonSm from "../components/Button/ButtonSm";
 
 const CourseCard = () => {
+  const username = 123;
+
   return (
     <div className="bg-white rounded-2xl shadow-2xl p-4 m-4 w-80 relative overflow-hidden transform transition-transform ease-in duration-300 hover:scale-105">
       <div className="flex flex-col items-center justify-center h-60">
@@ -17,8 +19,17 @@ const CourseCard = () => {
           This video is the first part of the complete Web3 Bootcamp
         </p>
         <div className="flex justify-around items-center">
-          <p className="text-lg font-semibold text-indigo-700">$79</p>
-          <ButtonSm title="Buy Now" />
+          {username ? (
+            <>
+              <ButtonSm title="Update" />
+              <ButtonSm title="Delete" />
+            </>
+          ) : (
+            <>
+              <p className="text-lg font-semibold text-indigo-700">$79</p>
+              <ButtonSm title="Buy Now" />
+            </>
+          )}
         </div>
       </div>
     </div>
