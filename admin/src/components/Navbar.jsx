@@ -1,8 +1,17 @@
 import { Link } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+
 import ButtonSm from "./Button/ButtonSm";
+import { adminEmailState } from "../store/selectors/adminEmail";
+import { isAdminLoading } from "../store/selectors/isAdminLoading";
+import { adminState } from "../store/atoms/admin";
 
 const Navbar = () => {
-  const username = 12;
+  const email = useRecoilValue(adminEmailState);
+  const loading = useRecoilValue(isAdminLoading);
+  const setAdmin = useSetRecoilState(adminState);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-row justify-around mt-4 shadow-xl h-16">
@@ -15,13 +24,24 @@ const Navbar = () => {
         className="border-2 border-purple-500 rounded-2xl p-2 w-64 mb-6"
       />
       <div className="flex flex-row space-x-3 mb-6">
-        {username ? (
+        {!loading && email ? (
           <>
             <Link to="/create">
               <ButtonSm title="Create" />
             </Link>
             <Link to="/">
-              <ButtonSm title="Logout" />
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  setAdmin({
+                    isLoading: false,
+                    adminEmail: null,
+                  });
+                  navigate("/");
+                }}
+              >
+                <ButtonSm title="Logout" />
+              </button>
             </Link>
           </>
         ) : (

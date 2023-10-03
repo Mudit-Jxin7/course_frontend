@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSetRecoilState } from "recoil";
+import { adminState } from "../store/atoms/admin";
 
 const LoginComponent = () => {
   const navigate = useNavigate();
+  const setAdmin = useSetRecoilState(adminState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,10 +26,15 @@ const LoginComponent = () => {
       const token = response.data.token;
       localStorage.setItem("token", token);
 
+      setAdmin({
+        adminEmail: email,
+        isLoading: false,
+      });
+
       toast.success("Login successful!");
       setTimeout(() => {
         navigate("/feed");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data);
