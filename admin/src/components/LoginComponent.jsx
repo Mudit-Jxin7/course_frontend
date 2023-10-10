@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
@@ -95,7 +95,7 @@ const LoginComponent = () => {
                 Login
               </button>
             </form>
-            <Link to="/sign">
+            {/* <Link to="/sign">
               {" "}
               <button
                 to="/sign"
@@ -103,7 +103,7 @@ const LoginComponent = () => {
               >
                 Create An Account
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

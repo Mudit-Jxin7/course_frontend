@@ -19,7 +19,6 @@ export default function App() {
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/sign" element={<Signin />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/create" element={<CreateCourse />} />
           </Route>

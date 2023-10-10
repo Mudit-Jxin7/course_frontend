@@ -1,4 +1,8 @@
 import { useRecoilValue } from "recoil";
+import axios from "axios";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+
 import ButtonSm from "../components/Button/ButtonSm";
 import { adminEmailState } from "../store/selectors/adminEmail";
 
@@ -7,6 +11,21 @@ const CourseCard = ({ course }) => {
 
   const descriptionWords = course.description.split(" ").slice(0, 50);
   const truncatedDescription = descriptionWords.join(" ");
+
+  const deleteCourse = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/course/deletecourse/${id}`
+      );
+      if (response.status === 200) {
+        toast.success("Successfully deleted course");
+        console.log("Course deleted successfully");
+      }
+    } catch (error) {
+      toast.error(error.response.data);
+      console.error("Error deleting course:", error);
+    }
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-2xl p-4 m-4 w-80 relative overflow-hidden transform transition-transform ease-in duration-300 hover:scale-105">
@@ -23,7 +42,10 @@ const CourseCard = ({ course }) => {
           {email ? (
             <>
               <ButtonSm title="Update" />
-              <ButtonSm title="Delete" />
+              <button onClick={() => deleteCourse(course._id)}>
+                {" "}
+                <ButtonSm title="Delete" />
+              </button>
             </>
           ) : (
             <>
@@ -36,6 +58,16 @@ const CourseCard = ({ course }) => {
       </div>
     </div>
   );
+};
+
+CourseCard.propTypes = {
+  course: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    imageLink: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default CourseCard;

@@ -20,9 +20,6 @@ const Hero = () => {
           <Link to="/login">
             <ButtonLg title="Log in" />
           </Link>
-          <Link to="/sign">
-            <ButtonLg title="Sign in" />
-          </Link>
         </div>
       </div>
       <div>

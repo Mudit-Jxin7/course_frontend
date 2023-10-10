@@ -48,9 +48,13 @@ const Navbar = () => {
             <Link to="/login">
               <ButtonSm title="Log in" />
             </Link>
-            <Link to="/sign">
-              <ButtonSm title="Sign in" />
-            </Link>
+            <a
+              href="https://github.com/Mudit-Jxin7/course_frontend"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ButtonSm title="Github" />
+            </a>
           </>
         )}
       </div>

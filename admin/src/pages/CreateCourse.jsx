@@ -46,9 +46,11 @@ const CreateCourse = () => {
         toast.success("Course created");
         console.log("Course created successfully");
       } else {
+        toast.error("Failed to create course");
         console.error("Failed to create course");
       }
     } catch (error) {
+      toast.error("Failed to create course");
       console.error("Error:", error);
     } finally {
       setFormData({
