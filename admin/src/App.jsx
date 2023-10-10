@@ -5,9 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Signin from "./pages/Signin";
 import Feed from "./pages/Feed";
 import CreateCourse from "./pages/CreateCourse";
+import Update from "./pages/Update";
 import InitUser from "./InitUser";
 
 export default function App() {
@@ -21,6 +21,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/create" element={<CreateCourse />} />
+            <Route path="/update/:id" element={<Update />} />
           </Route>
         </Routes>
         <ToastContainer />

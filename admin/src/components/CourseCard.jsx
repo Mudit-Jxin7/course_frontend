@@ -2,12 +2,14 @@ import { useRecoilValue } from "recoil";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import ButtonSm from "../components/Button/ButtonSm";
 import { adminEmailState } from "../store/selectors/adminEmail";
 
 const CourseCard = ({ course }) => {
   const email = useRecoilValue(adminEmailState);
+  const navigate = useNavigate();
 
   const descriptionWords = course.description.split(" ").slice(0, 50);
   const truncatedDescription = descriptionWords.join(" ");
@@ -41,7 +43,9 @@ const CourseCard = ({ course }) => {
         <div className="flex justify-around items-center">
           {email ? (
             <>
-              <ButtonSm title="Update" />
+              <button onClick={() => navigate(`/update/${course._id}`)}>
+                <ButtonSm title="Update" />
+              </button>
               <button onClick={() => deleteCourse(course._id)}>
                 {" "}
                 <ButtonSm title="Delete" />
