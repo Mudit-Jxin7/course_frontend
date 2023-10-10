@@ -15,9 +15,8 @@ const Navbar = () => {
 
   return (
     <div className="flex flex-row justify-around mt-4 shadow-xl h-16">
-      <Link to="/">
-        <h1 className="text-indigo-600 text-4xl font-bold">AcademeXAdmin</h1>
-      </Link>
+      <h1 className="text-indigo-600 text-4xl font-bold">AcademeXAdmin</h1>
+
       <input
         type="text"
         placeholder="Search"
