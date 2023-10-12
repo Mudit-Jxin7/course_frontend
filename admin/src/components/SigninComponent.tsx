@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const SigninComponent = () => {
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
@@ -15,10 +15,16 @@ const SigninComponent = () => {
 
       await axios.post("http://localhost:4000/admin/register", requestData);
 
-      toast.success("Registered successfully , Please Login!");
+      toast.success("Registered successfully, Please Login!");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.data) {
+          toast.error(error.response.data);
+        } else {
+          toast.error("An error occurred during registration.");
+        }
+      }
     } finally {
       setEmail("");
       setPassword("");

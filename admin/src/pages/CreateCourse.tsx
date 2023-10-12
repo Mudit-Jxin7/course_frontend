@@ -1,15 +1,12 @@
 import { useRecoilValue } from "recoil";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useParams, useNavigate } from "react-router-dom";
 
 import { adminEmailState } from "../store/selectors/adminEmail";
 
-const Update = () => {
+const CreateCourse = () => {
   const email = useRecoilValue(adminEmailState);
-  const { id } = useParams();
-  const navigate = useNavigate();
 
   if (!email) {
     window.location.href = "/";
@@ -31,44 +28,45 @@ const Update = () => {
     prerequisite: "",
   });
 
-  useEffect(() => {
-    async function fetchCourse() {
-      try {
-        console.log(id);
-        const response = await axios.get(
-          `http://localhost:4000/course/getcourse/${id}`
-        );
-
-        if (response.status === 200) {
-          const courseData = response.data.course;
-          setFormData(courseData);
-        }
-      } catch (error) {
-        console.error("Error fetching course:", error);
-      }
-    }
-
-    fetchCourse();
-  }, [id]);
-
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(
-        `http://localhost:4000/course/updatecourse/${id}`,
-        formData
+      const response = await axios.post(
+        "http://localhost:4000/course/createcourse",
+        formData,
+        {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
       );
 
-      if (response.status === 200) {
-        toast.success("Course updated successfully");
-        navigate("/feed");
+      if (response.status === 201) {
+        toast.success("Course created");
+        console.log("Course created successfully");
       } else {
-        toast.error("Failed to update course");
+        toast.error("Failed to create course");
+        console.error("Failed to create course");
       }
     } catch (error) {
-      console.error("Error updating course:", error);
-      toast.error("Failed to update course");
+      toast.error("Failed to create course");
+      console.error("Error:", error);
+    } finally {
+      setFormData({
+        title: "",
+        description: "",
+        price: 0,
+        imageLink: "",
+        rating: 0,
+        instructor: "",
+        duration: 0,
+        language: "",
+        videoLink: "",
+        published: false,
+        courseContent: "",
+        prerequisite: "",
+      });
     }
   };
 
@@ -125,7 +123,7 @@ const Update = () => {
               required
               value={formData.price}
               onChange={(e) =>
-                setFormData({ ...formData, price: e.target.value })
+                setFormData({ ...formData, price: parseFloat(e.target.value) })
               }
             />
           </div>
@@ -162,7 +160,7 @@ const Update = () => {
               required
               value={formData.rating}
               onChange={(e) =>
-                setFormData({ ...formData, rating: e.target.value })
+                setFormData({ ...formData, rating: parseFloat(e.target.value) })
               }
             />
           </div>
@@ -198,7 +196,10 @@ const Update = () => {
               required
               value={formData.duration}
               onChange={(e) =>
-                setFormData({ ...formData, duration: e.target.value })
+                setFormData({
+                  ...formData,
+                  duration: parseFloat(e.target.value),
+                })
               }
             />
           </div>
@@ -247,9 +248,9 @@ const Update = () => {
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               placeholder="true"
               required
-              value={formData.published}
+              checked={formData.published}
               onChange={(e) =>
-                setFormData({ ...formData, published: e.target.value })
+                setFormData({ ...formData, published: e.target.checked })
               }
             />
           </div>
@@ -258,12 +259,11 @@ const Update = () => {
               CourseContent:
             </label>
             <textarea
-              type="url"
               id="courseContent"
               name="courseContent"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               placeholder="Enter Course Content"
-              rows="4"
+              rows={4}
               required
               value={formData.courseContent}
               onChange={(e) =>
@@ -276,12 +276,11 @@ const Update = () => {
               Prerequisite:
             </label>
             <textarea
-              type="text"
               id="prerequisite"
               name="prerequisite"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               placeholder="Enter prerequisite"
-              rows="4"
+              rows={4}
               required
               value={formData.prerequisite}
               onChange={(e) =>
@@ -296,7 +295,7 @@ const Update = () => {
             type="submit"
             className="rounded-lg bg-indigo-600 p-2 text-white w-32 font-semibold hover:bg-blue-600 transition duration-300"
           >
-            Update
+            Create
           </button>
         </center>
       </form>
@@ -304,4 +303,4 @@ const Update = () => {
   );
 };
 
-export default Update;
+export default CreateCourse;

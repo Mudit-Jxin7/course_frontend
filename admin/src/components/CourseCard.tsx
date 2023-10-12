@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -7,14 +8,22 @@ import { useNavigate } from "react-router-dom";
 import ButtonSm from "../components/Button/ButtonSm";
 import { adminEmailState } from "../store/selectors/adminEmail";
 
-const CourseCard = ({ course }) => {
+type CourseType = {
+  title: string;
+  description: string;
+  imageLink: string;
+  _id: string;
+  price: number;
+};
+
+const CourseCard = ({ course }: { course: CourseType }) => {
   const email = useRecoilValue(adminEmailState);
   const navigate = useNavigate();
 
   const descriptionWords = course.description.split(" ").slice(0, 50);
   const truncatedDescription = descriptionWords.join(" ");
 
-  const deleteCourse = async (id) => {
+  const deleteCourse = async (id: string) => {
     try {
       const response = await axios.delete(
         `http://localhost:4000/course/deletecourse/${id}`
@@ -23,7 +32,7 @@ const CourseCard = ({ course }) => {
         toast.success("Successfully deleted course");
         console.log("Course deleted successfully");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response.data);
       console.error("Error deleting course:", error);
     }
@@ -35,6 +44,7 @@ const CourseCard = ({ course }) => {
         <img
           src={course.imageLink}
           className="w-full h-full object-cover rounded-lg"
+          alt={course.title}
         />
       </div>
       <div className="p-4 text-center">

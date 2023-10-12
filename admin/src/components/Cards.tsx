@@ -3,8 +3,16 @@ import { useEffect, useState } from "react";
 
 import CourseCard from "./CourseCard";
 
+interface Course {
+  _id: string;
+  title: string;
+  description: string;
+  imageLink: string;
+  price: number;
+}
+
 const Cards = () => {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     async function fetchCourses() {

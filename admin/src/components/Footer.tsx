@@ -22,13 +22,13 @@ const Footer = () => {
 
         <div className="flex flex-col items-center space-y-2">
           <h2 className="text-3xl text-indigo-600 font-bold">Navigate</h2>
-          <Link href={"/"} className="text-sm">
+          <Link to={"/"} className="text-sm">
             Home
           </Link>
-          <Link href={"/"} className="text-sm">
+          <Link to={"/contact"} className="text-sm">
             Contact
           </Link>
-          <Link href={"/"} className="text-sm">
+          <Link to={"/about"} className="text-sm">
             About
           </Link>
         </div>
@@ -37,18 +37,21 @@ const Footer = () => {
           <h2 className="text-3xl text-indigo-600 font-bold">Socials</h2>
 
           <div className="m-4 flex justify-center items-center text-2xl gap-4">
-            <Link target="_blank">
+            <a
+              target="_blank"
+              href="https://github.com/Mudit-Jxin7/course_frontend"
+            >
               <AiOutlineGithub />
-            </Link>
-            <Link target="_blank">
+            </a>
+            <a target="_blank" href="https://twitter.com">
               {" "}
               <AiOutlineTwitter />
-            </Link>
-            <Link href={"/"}>
+            </a>
+            <Link to={"/"}>
               {" "}
               <AiOutlineYoutube />
             </Link>
-            <Link href={"/"}>
+            <Link to={"/"}>
               <AiOutlineInstagram />
             </Link>
           </div>
