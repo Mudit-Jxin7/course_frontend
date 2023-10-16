@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { adminState } from "../store/atoms/admin";
 
@@ -9,7 +9,7 @@ const LoginComponent = () => {
   const navigate = useNavigate();
   const setAdmin = useSetRecoilState(adminState);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -19,7 +19,7 @@ const LoginComponent = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:4000/admin/login",
+        "http://localhost:4000/user/login",
         requestData
       );
 
@@ -35,8 +35,7 @@ const LoginComponent = () => {
       setTimeout(() => {
         navigate("/feed");
       }, 1000);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast.error(error.response.data);
     } finally {
@@ -45,8 +44,8 @@ const LoginComponent = () => {
     }
   };
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <div className="flex flex-row justify-start mr-16">
@@ -57,7 +56,7 @@ const LoginComponent = () => {
         <div className="min-h-screen flex items-center justify-center w-full">
           <div className="bg-white p-8 rounded shadow-2xl w-96">
             <center className="text-2xl font-semibold mb-4">Login</center>
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-600">
                   Email
@@ -91,19 +90,17 @@ const LoginComponent = () => {
               <button
                 type="submit"
                 className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none my-8"
+                onClick={handleSubmit}
               >
                 Login
               </button>
             </form>
-            {/* <Link to="/sign">
+            <Link to="/signin">
               {" "}
-              <button
-                to="/sign"
-                className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
-              >
+              <button className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none">
                 Create An Account
               </button>
-            </Link> */}
+            </Link>
           </div>
         </div>
       </div>

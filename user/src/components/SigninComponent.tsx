@@ -1,52 +1,40 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useSetRecoilState } from "recoil";
-import { adminState } from "../store/atoms/admin";
 
-const LoginComponent = () => {
-  const navigate = useNavigate();
-  const setAdmin = useSetRecoilState(adminState);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+const SigninComponent = () => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
       const requestData = {
         email,
         password,
+        name,
       };
 
-      const response = await axios.post(
-        "http://localhost:4000/admin/login",
-        requestData
-      );
+      await axios.post("http://localhost:4000/user/register", requestData);
 
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-
-      setAdmin({
-        adminEmail: email,
-        isLoading: false,
-      });
-
-      toast.success("Login successful!");
-      setTimeout(() => {
-        navigate("/feed");
-      }, 1000);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+      toast.success("Registered successfully, Please Login!");
+    } catch (error) {
       console.log(error);
-      toast.error(error.response.data);
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.data) {
+          toast.error(error.response.data);
+        } else {
+          toast.error("An error occurred during registration.");
+        }
+      }
     } finally {
       setEmail("");
       setPassword("");
     }
   };
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   return (
     <div className="flex flex-row justify-start mr-16">
@@ -56,8 +44,23 @@ const LoginComponent = () => {
       <div>
         <div className="min-h-screen flex items-center justify-center w-full">
           <div className="bg-white p-8 rounded shadow-2xl w-96">
-            <center className="text-2xl font-semibold mb-4">Login</center>
-            <form onSubmit={handleSubmit}>
+            <center className="text-2xl font-semibold mb-4">Sign In</center>
+            <form>
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-gray-600">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="email"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-600">
                   Email
@@ -90,20 +93,18 @@ const LoginComponent = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none my-8"
+                className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 focus:outline-none my-8"
+                onClick={handleSubmit}
               >
-                Login
+                Sign in
               </button>
             </form>
-            {/* <Link to="/sign">
-              {" "}
-              <button
-                to="/sign"
-                className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
-              >
-                Create An Account
-              </button>
-            </Link> */}
+            <p className="mt-4 text-center">
+              Have an account?{" "}
+              <Link to="/login" className="text-indigo-500">
+                Login
+              </Link>
+            </p>
           </div>
         </div>
       </div>
@@ -111,4 +112,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default SigninComponent;
