@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; // Import Axios
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { adminState } from "../store/atoms/admin";
+import { toast } from "react-toastify";
 
 const LoginComponent = () => {
   const navigate = useNavigate();
   const setAdmin = useSetRecoilState(adminState);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -18,6 +19,7 @@ const LoginComponent = () => {
         password,
       };
 
+      // Send the POST request without manually setting Content-Length
       const response = await axios.post(
         "http://localhost:4000/user/login",
         requestData
@@ -35,7 +37,8 @@ const LoginComponent = () => {
       setTimeout(() => {
         navigate("/feed");
       }, 1000);
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.log(error);
       toast.error(error.response.data);
     } finally {
@@ -56,7 +59,7 @@ const LoginComponent = () => {
         <div className="min-h-screen flex items-center justify-center w-full">
           <div className="bg-white p-8 rounded shadow-2xl w-96">
             <center className="text-2xl font-semibold mb-4">Login</center>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-600">
                   Email
@@ -90,14 +93,13 @@ const LoginComponent = () => {
               <button
                 type="submit"
                 className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none my-8"
-                onClick={handleSubmit}
               >
                 Login
               </button>
             </form>
             <Link to="/signin">
               {" "}
-              <button className="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none">
+              <button className="w-full bg-indigo-500 text-white py-2 rounded-lg hover-bg-blue-600 focus:outline-none">
                 Create An Account
               </button>
             </Link>
