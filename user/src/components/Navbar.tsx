@@ -6,6 +6,7 @@ import ButtonSm from "./Button/ButtonSm";
 import { adminEmailState } from "../store/selectors/adminEmail";
 import { isAdminLoading } from "../store/selectors/isAdminLoading";
 import { adminState } from "../store/atoms/admin";
+import ButtonLg from "./Button/ButtonLg";
 
 const Navbar = () => {
   const email = useRecoilValue(adminEmailState);
@@ -25,8 +26,11 @@ const Navbar = () => {
       <div className="flex flex-row space-x-3 mb-6">
         {!loading && email ? (
           <>
-            <Link to="/create">
-              <ButtonSm title="Create" />
+            <Link to="/liked">
+              <ButtonSm title="Liked" />
+            </Link>
+            <Link to="/purchased">
+              <ButtonLg title="Purchased" />
             </Link>
             <Link to="/">
               <button

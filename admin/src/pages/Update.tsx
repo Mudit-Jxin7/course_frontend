@@ -26,6 +26,7 @@ const Update = () => {
     duration: 0,
     language: "",
     videoLink: "",
+    tag: "",
     published: false,
     courseContent: "",
     prerequisite: "",
@@ -236,6 +237,23 @@ const Update = () => {
               value={formData.videoLink}
               onChange={(e) =>
                 setFormData({ ...formData, videoLink: e.target.value })
+              }
+            />
+          </div>
+          <div className="w-1/2 pl-2">
+            <label htmlFor="tag" className="block font-medium my-3">
+              Tag:
+            </label>
+            <input
+              type="text"
+              id="tag"
+              name="tag"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+              placeholder="Enter tag"
+              required
+              value={formData.tag}
+              onChange={(e) =>
+                setFormData({ ...formData, tag: e.target.value })
               }
             />
           </div>

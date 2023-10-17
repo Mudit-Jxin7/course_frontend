@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import CourseCard from "./CourseCard";
+import SearchBar from "./SearchBar";
 
 interface Course {
   _id: string;
@@ -32,6 +33,7 @@ const Cards = () => {
   return (
     <>
       <center className="text-4xl font-medium mt-6">Courses</center>
+      <SearchBar />
       <div className="grid grid-cols-4 gap-2 mx-12">
         {courses.map((course) => (
           <CourseCard key={course._id} course={course} />
