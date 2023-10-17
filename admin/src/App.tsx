@@ -10,6 +10,7 @@ import CreateCourse from "./pages/CreateCourse";
 import Update from "./pages/Update";
 import InitUser from "./InitUser";
 import Contact from "./pages/Contact";
+import About from "./pages/About";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/create" element={<CreateCourse />} />
             <Route path="/update/:id" element={<Update />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
           </Route>
         </Routes>
         <ToastContainer />
