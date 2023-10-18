@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRecoilValue } from "recoil";
-import axios from "axios";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
-import ButtonSm from "../components/Button/ButtonSm";
 import { adminEmailState } from "../store/selectors/adminEmail";
+import ButtonLg from "./Button/ButtonLg";
 
 type CourseType = {
   title: string;
@@ -18,28 +15,12 @@ type CourseType = {
 
 const CourseCard = ({ course }: { course: CourseType }) => {
   const email = useRecoilValue(adminEmailState);
-  const navigate = useNavigate();
 
-  const descriptionWords = course.description.split(" ").slice(0, 50);
+  const descriptionWords = course.description.split(" ").slice(0, 10);
   const truncatedDescription = descriptionWords.join(" ");
 
-  const deleteCourse = async (id: string) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:4000/course/deletecourse/${id}`
-      );
-      if (response.status === 200) {
-        toast.success("Successfully deleted course");
-        console.log("Course deleted successfully");
-      }
-    } catch (error: any) {
-      toast.error(error.response.data);
-      console.error("Error deleting course:", error);
-    }
-  };
-
   return (
-    <div className="bg-white rounded-2xl shadow-2xl p-4 m-4 w-80 relative overflow-hidden transform transition-transform ease-in duration-300 hover:scale-105">
+    <div className="bg-white mt-9 rounded-2xl shadow-2xl p-4 m-4 w-80 relative overflow-hidden transform transition-transform ease-in duration-300 hover:scale-105">
       <div className="flex flex-col items-center justify-center h-60">
         <img
           src={course.imageLink}
@@ -49,17 +30,14 @@ const CourseCard = ({ course }: { course: CourseType }) => {
       </div>
       <div className="p-4 text-center">
         <h2 className="text-lg font-semibold mb-2">{course.title}</h2>
-        <p className="text-gray-600 mb-4 text-sm">{truncatedDescription}</p>
-        <div className="flex justify-around items-center">
+        <p className="text-gray-600 mb-4 text-sm">{truncatedDescription}...</p>
+        <div className="flex justify-around items-center flex-col space-y-6">
           {email ? (
             <>
-              <button onClick={() => navigate(`/update/${course._id}`)}>
-                <ButtonSm title="Update" />
-              </button>
-              <button onClick={() => deleteCourse(course._id)}>
-                {" "}
-                <ButtonSm title="Delete" />
-              </button>
+              <ButtonLg title="View Course" />
+              <p className="text-lg font-semibold text-indigo-700">
+                ${course.price}
+              </p>
             </>
           ) : (
             <>

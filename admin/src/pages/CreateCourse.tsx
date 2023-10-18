@@ -256,23 +256,7 @@ const CreateCourse = () => {
               }
             />
           </div>
-          <div className="w-1/2 pl-2">
-            <label htmlFor="published" className="block font-medium my-3">
-              Published:
-            </label>
-            <input
-              type="text"
-              id="published"
-              name="published"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              placeholder="true"
-              required
-              checked={formData.published}
-              onChange={(e) =>
-                setFormData({ ...formData, published: e.target.checked })
-              }
-            />
-          </div>
+
           <div className="w-1/2 pr-2">
             <label htmlFor="courseContent" className="block font-medium my-3">
               CourseContent:
@@ -307,12 +291,28 @@ const CreateCourse = () => {
               }
             />
           </div>
+          <div className="w-1/2 pl-2">
+            <label htmlFor="published" className="block font-medium my-3">
+              Published:
+            </label>
+            <input
+              type="text"
+              id="published"
+              name="published"
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+              placeholder="true"
+              required
+              checked={formData.published}
+              onChange={(e) =>
+                setFormData({ ...formData, published: e.target.checked })
+              }
+            />
+          </div>
         </div>
-
         <center className="mb-4">
           <button
             type="submit"
-            className="rounded-lg bg-indigo-600 p-2 text-white w-32 font-semibold hover:bg-blue-600 transition duration-300"
+            className="rounded-lg mt-6 bg-indigo-600 p-2 text-white w-32 font-semibold hover:bg-blue-600 transition duration-300"
           >
             Create
           </button>

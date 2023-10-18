@@ -17,6 +17,7 @@ interface Course {
 
 const Cards = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const email = useRecoilValue(adminEmailState);
 
   useEffect(() => {
@@ -32,7 +33,10 @@ const Cards = () => {
     }
 
     fetchCourses();
+    setLoading(false);
   }, [courses, setCourses]);
+
+  if (loading) return <>Loading...</>;
 
   return (
     <>
