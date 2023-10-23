@@ -1,4 +1,11 @@
-const Pagination = ({
+interface PaginationProps {
+  itemsPerPage: number;
+  totalItems: number;
+  currentPage: number;
+  onPageChange: (pageNumber: number) => void;
+}
+
+const Pagination: React.FC<PaginationProps> = ({
   itemsPerPage,
   totalItems,
   currentPage,
@@ -18,8 +25,7 @@ const Pagination = ({
           className="border-solid border-2 border-indigo-500 rounded-full h-8 w-8 flex items-center justify-center"
         >
           <a
-            href="#"
-            className={`${
+            className={`cursor-pointer ${
               currentPage === number
                 ? "text-indigo-700"
                 : "hover:text-indigo-700"
