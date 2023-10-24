@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRecoilValue } from "recoil";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { adminEmailState } from "../store/selectors/adminEmail";
 import ButtonLg from "./Button/ButtonLg";
@@ -34,7 +35,10 @@ const CourseCard = ({ course }: { course: CourseType }) => {
         <div className="flex justify-around items-center flex-col space-y-6">
           {email ? (
             <>
-              <ButtonLg title="View Course" />
+              <Link to={`/course/${course._id}`}>
+                <ButtonLg title="View Course" />
+              </Link>
+
               <p className="text-lg font-semibold text-indigo-700">
                 ${course.price}
               </p>

@@ -18,7 +18,7 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className="flex flex-row justify-center space-x-4 items-center">
+    <div className="flex flex-row justify-center space-x-4 items-center mt-6 mb-6">
       {pageNumbers.map((number) => (
         <div
           key={number}

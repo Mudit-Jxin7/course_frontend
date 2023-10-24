@@ -10,6 +10,7 @@ import Signin from "./pages/Signin";
 import Feed from "./pages/Feed";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import CoursePage from "./pages/CoursePage";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/signin" element={<Signin />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/course/:id" element={<CoursePage />} />
             <Route path="/about" element={<About />} />
           </Route>
         </Routes>
