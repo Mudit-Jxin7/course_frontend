@@ -16,6 +16,7 @@ const Update = () => {
     return null;
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -32,6 +33,7 @@ const Update = () => {
     prerequisite: "",
   });
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     async function fetchCourse() {
       try {

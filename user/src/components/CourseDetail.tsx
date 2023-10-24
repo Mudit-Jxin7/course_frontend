@@ -1,14 +1,28 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 import ButtonLg from "./Button/ButtonLg";
 import Loading from "./Loading";
+import { discounts } from "../constants/index";
 
 const CourseDetail = () => {
-  const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState<{
+    title?: string;
+    description?: string;
+    imageLink?: string;
+    instructor?: string;
+    price?: number;
+    language?: string;
+    courseContent?: string;
+    prerequisite?: string;
+  } | null>(null);
   const { id } = useParams();
   console.log(id);
+  const randomIndex = Math.floor(Math.random() * discounts.length);
+
+  const selectedDiscount = discounts[randomIndex];
 
   useEffect(() => {
     axios
@@ -19,13 +33,13 @@ const CourseDetail = () => {
       .catch((error) => {
         console.error("Failed to fetch course details", error);
       });
-  }, []);
+  }, [id]);
 
   if (course === null) {
     return <Loading />;
   }
 
-  const courseContentList = course.courseContent
+  const courseContentList = (course?.courseContent || "")
     .split(",")
     .map((content, index) => <li key={index}>{content.trim()}</li>);
 
@@ -42,7 +56,7 @@ const CourseDetail = () => {
         <div className="p-4 text-center">
           <h1 className="text-3xl font-semibold mb-2">{course.title}</h1>
           <p className="text-gray-600 mb-4 text-lg">
-            ${course.price} | 59% off
+            ${course.price} | {selectedDiscount}% off
           </p>
           <div className="flex justify-around items-center flex-col space-y-6">
             <div className="text-xl font-semibold text-indigo-700">
@@ -71,9 +85,16 @@ const CourseDetail = () => {
             {course.instructor}
           </span>
         </p>
-        <p className="text-lg text-indigo-700 font-medium">
+        <p className="text-lg text-indigo-700 font-medium flex flex-row ">
           Ratings:{" "}
-          <span className="font-thin text-lg text-black">4.5 Stars</span>
+          <span className="font-thin text-lg text-black flex flex-row">
+            4.5 Stars{" "}
+            <div className="flex flex-row mt-1 ml-2 text-orange-400">
+              <FaStar /> <FaStar /> <FaStar />
+              <FaStar />
+              <FaStarHalfAlt />
+            </div>
+          </span>
         </p>
         <p className="text-lg text-indigo-700 font-medium">
           Language:{" "}
