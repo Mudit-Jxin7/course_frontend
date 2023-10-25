@@ -26,9 +26,6 @@ const Navbar = () => {
       <div className="flex flex-row space-x-3 mb-6">
         {!loading && email ? (
           <>
-            <Link to="/liked">
-              <ButtonSm title="Liked" />
-            </Link>
             <Link to="/purchased">
               <ButtonLg title="Purchased" />
             </Link>

@@ -7,7 +7,7 @@ const Loading = () => {
         height={100}
         width={100}
         radius={5}
-        color="#4fa94d"
+        color="#4338CA80"
         ariaLabel="ball-triangle-loading"
         visible={true}
       />
