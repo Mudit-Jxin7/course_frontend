@@ -18,6 +18,7 @@ const Feed = () => {
       <div className="flex flex-col">
         <Navbar />
         <Cards />
+        <div className="w-full bg-slate-200 h-0.5 mt-12"></div>
         <Footer />
       </div>
     </>

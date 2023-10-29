@@ -19,6 +19,7 @@ const CoursePage = () => {
       <Navbar />
       <CourseDetail />
       <Reviews />
+      <div className="w-full bg-slate-200 h-0.5 mt-12"></div>
       <Footer />
     </>
   );

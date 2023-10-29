@@ -22,9 +22,7 @@ const Footer = () => {
 
         <div className="flex flex-col items-center space-y-2">
           <h2 className="text-3xl text-indigo-600 font-bold">Navigate</h2>
-          <Link to={"/"} className="text-sm">
-            Home
-          </Link>
+          <a className="text-sm">Home</a>
           <Link to={"/contact"} className="text-sm">
             Contact
           </Link>
