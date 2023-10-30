@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { loadStripe } from "@stripe/stripe-js";
 
 import ButtonLg from "./Button/ButtonLg";
 import Loading from "./Loading";
@@ -19,7 +20,6 @@ const CourseDetail = () => {
     prerequisite?: string;
   } | null>(null);
   const { id } = useParams();
-  console.log(id);
   const randomIndex = Math.floor(Math.random() * discounts.length);
 
   const selectedDiscount = discounts[randomIndex];
@@ -43,6 +43,35 @@ const CourseDetail = () => {
     .split(",")
     .map((content, index) => <li key={index}>{content.trim()}</li>);
 
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51O59p6SB2vD416D36xFnCofve1xFi6LRPGgSfhyqxj19aydvfKp6sYLQmNlRtQbelWKe2C7HTGcB1yV4RWQMCDAg0075n5zHS4"
+    );
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    };
+
+    const response = await fetch(`http://localhost:4000/payment/pay/${id}`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify([course]),
+    });
+
+    const session = await response.json();
+
+    const result = stripe?.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result) {
+      if ((await result).error) {
+        console.log((await result).error);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-row justify-evenly mx-6">
       <div className="bg-white mt-9 rounded-2xl shadow-2xl p-4 m-4 w-1/4 relative overflow-hidden transform transition-transform ease-in duration-300 hover:scale-105">
@@ -62,7 +91,9 @@ const CourseDetail = () => {
             <div className="text-xl font-semibold text-indigo-700">
               {course.instructor}
             </div>
-            <ButtonLg title="Buy Course" />
+            <button onClick={makePayment}>
+              <ButtonLg title="Buy Course" />
+            </button>
             <ButtonLg title="Star Course" />
             <div>
               <p>30-Day Money Back Guarantee</p>
