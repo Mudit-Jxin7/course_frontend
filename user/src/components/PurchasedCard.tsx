@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
+
+import { adminEmailState } from "../store/selectors/adminEmail";
 import Loading from "./Loading";
 import PurchasedCourseCard from "./PurchasedCourseCard";
 
@@ -14,6 +18,8 @@ interface Course {
 const PurchasedCard = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const email = useRecoilValue(adminEmailState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchCourses() {
@@ -38,6 +44,10 @@ const PurchasedCard = () => {
   }, []);
 
   if (loading) return <Loading />;
+
+  if (!email) {
+    navigate("/");
+  }
 
   return (
     <>

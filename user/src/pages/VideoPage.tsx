@@ -1,12 +1,16 @@
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { adminEmailState } from "../store/selectors/adminEmail";
 
 const VideoPage = () => {
+  const email = useRecoilValue(adminEmailState);
+  const navigate = useNavigate();
   const [course, setCourse] = useState<{
     title?: string;
     description?: string;
@@ -24,6 +28,10 @@ const VideoPage = () => {
         console.error("Failed to fetch course details", error);
       });
   }, [id]);
+
+  if (!email) {
+    navigate("/");
+  }
 
   return (
     <>

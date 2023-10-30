@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
+import { useRecoilValue } from "recoil";
 
 import ButtonLg from "./Button/ButtonLg";
 import Loading from "./Loading";
 import { discounts } from "../constants/index";
+import { adminEmailState } from "../store/selectors/adminEmail";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState<{
@@ -21,6 +23,8 @@ const CourseDetail = () => {
     prerequisite?: string;
   } | null>(null);
   const { id } = useParams();
+  const email = useRecoilValue(adminEmailState);
+  const navigate = useNavigate();
   const randomIndex = Math.floor(Math.random() * discounts.length);
 
   const selectedDiscount = discounts[randomIndex];
@@ -75,6 +79,10 @@ const CourseDetail = () => {
       }
     }
   };
+
+  if (!email) {
+    navigate("/");
+  }
 
   return (
     <div className="flex flex-row justify-evenly mx-6">
