@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-toastify";
 
 import ButtonLg from "./Button/ButtonLg";
 import Loading from "./Loading";
@@ -68,6 +69,9 @@ const CourseDetail = () => {
     if (result) {
       if ((await result).error) {
         console.log((await result).error);
+        toast.error("Payment Failed");
+      } else {
+        toast.success("Payment Successfull!");
       }
     }
   };

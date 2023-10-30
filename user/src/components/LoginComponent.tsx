@@ -36,7 +36,7 @@ const LoginComponent = () => {
       toast.success("Login successful!");
       setTimeout(() => {
         navigate("/feed");
-      }, 1000);
+      }, 500);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);

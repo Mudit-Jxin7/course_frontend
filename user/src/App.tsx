@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import CoursePage from "./pages/CoursePage";
 import VideoPage from "./pages/VideoPage";
+import PurchasedCourse from "./pages/PurchasedCourse";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/course/:id" element={<CoursePage />} />
             <Route path="/about" element={<About />} />
+            <Route path="/purchased" element={<PurchasedCourse />} />
             <Route path="/video/:id" element={<VideoPage />} />
           </Route>
         </Routes>
