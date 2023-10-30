@@ -29,9 +29,27 @@ const VideoPage = () => {
       });
   }, [id]);
 
-  if (!email) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!email) {
+      navigate("/");
+    } else {
+      axios
+        .get(`http://localhost:4000/payment/haspurchased/${id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          if (!response.data.hasPurchased) {
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to check course purchase status", error);
+          navigate("/");
+        });
+    }
+  }, [email, navigate, id]);
 
   return (
     <>
