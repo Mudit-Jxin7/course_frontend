@@ -22,6 +22,7 @@ const CourseDetail = () => {
     courseContent?: string;
     prerequisite?: string;
   } | null>(null);
+  const [hasPurchased, setHasPurchased] = useState<boolean>(false);
   const { id } = useParams();
   const email = useRecoilValue(adminEmailState);
   const navigate = useNavigate();
@@ -39,6 +40,27 @@ const CourseDetail = () => {
         console.error("Failed to fetch course details", error);
       });
   }, [id]);
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/");
+    } else {
+      axios
+        .get(`http://localhost:4000/payment/haspurchased/${id}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          if (response.data.hasPurchased) {
+            setHasPurchased(true);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to check course purchase status", error);
+        });
+    }
+  }, [email, navigate, id]);
 
   if (course === null) {
     return <Loading />;
@@ -103,9 +125,12 @@ const CourseDetail = () => {
             <div className="text-xl font-semibold text-indigo-700">
               {course.instructor}
             </div>
-            <button onClick={makePayment}>
-              <ButtonLg title="Buy Course" />
-            </button>
+            {!hasPurchased && (
+              <button onClick={makePayment}>
+                <ButtonLg title="Buy Course" />
+              </button>
+            )}
+            {hasPurchased && <ButtonLg title="Purchased" />}
             <ButtonLg title="Star Course" />
             <div>
               <p>30-Day Money Back Guarantee</p>
