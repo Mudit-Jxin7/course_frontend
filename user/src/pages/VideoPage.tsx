@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { adminEmailState } from "../store/selectors/adminEmail";
+import AddReview from "../components/AddReview";
 
 const VideoPage = () => {
   const email = useRecoilValue(adminEmailState);
@@ -65,6 +66,7 @@ const VideoPage = () => {
         <h1 className="text-3xl my-8 font-semibold">{course?.title}</h1>
         <center className="text-lg text-gray-700">{course?.description}</center>
       </div>
+      <AddReview />
       <div className="w-full bg-slate-200 h-0.5 mt-12"></div>
       <Footer />
     </>

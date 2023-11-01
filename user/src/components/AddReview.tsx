@@ -1,6 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+
+import ButtonLg from "./Button/ButtonLg";
 
 interface Review {
   _id: string;
@@ -9,7 +11,16 @@ interface Review {
 }
 
 const Reviews = () => {
+  const [reviewText, setReviewText] = useState<string>("");
+
   const { id } = useParams();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [visibleReviews, setVisibleReviews] = useState(3);
+
+  const loadMore = () => {
+    setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 3);
+  };
+
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -23,13 +34,28 @@ const Reviews = () => {
     };
 
     fetchReviews();
-  }, [id]);
+  }, [id, reviewText, setReviewText]);
 
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [visibleReviews, setVisibleReviews] = useState(3);
+  const handleReviewSubmit = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      };
 
-  const loadMore = () => {
-    setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 3);
+      await axios.post(
+        `http://localhost:4000/course/review/${id}`,
+        {
+          text: reviewText,
+        },
+        config
+      );
+
+      setReviewText("");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -40,6 +66,20 @@ const Reviews = () => {
         </center>
 
         <ul>
+          <li className="bg-white rounded-2xl p-4 my-4 shadow">
+            <div className="text-lg font-semibold text-indigo-600">
+              Add Review
+            </div>
+            <input
+              type="text"
+              className="text-gray-600 border-indigo-600 border-2 rounded-md w-full mb-2"
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            />
+            <button onClick={handleReviewSubmit}>
+              <ButtonLg title={"Add"} />
+            </button>
+          </li>
           {reviews.slice(0, visibleReviews).map((review) => (
             <li
               key={review._id}
