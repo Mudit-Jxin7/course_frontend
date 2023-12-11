@@ -17,6 +17,7 @@ const Reviews = () => {
           `http://localhost:4000/course/getreview/${id}`
         );
         setReviews(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error(error);
       }

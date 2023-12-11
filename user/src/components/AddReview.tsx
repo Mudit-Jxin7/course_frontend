@@ -21,20 +21,20 @@ const Reviews = () => {
     setVisibleReviews((prevVisibleReviews) => prevVisibleReviews + 3);
   };
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/course/getreview/${id}`
-        );
-        setReviews(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/course/getreview/${id}`
+      );
+      setReviews(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     fetchReviews();
-  }, [id, reviewText, setReviewText]);
+  }, [id, reviewText]);
 
   const handleReviewSubmit = async () => {
     try {
@@ -53,6 +53,7 @@ const Reviews = () => {
       );
 
       setReviewText("");
+      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
