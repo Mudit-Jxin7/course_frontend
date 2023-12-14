@@ -5,6 +5,10 @@
 This is the frontend part of a course selling app built with React, TypeScript, Vite, and Recoil. The app provides user and admin interfaces, allowing admins to perform CRUD operations on courses and users to view and purchase courses using Stripe for payment processing.
 [Backend](https://github.com/Mudit-Jxin7/course_backend)
 
+## Demo
+
+https://github.com/Mudit-Jxin7/course_frontend/assets/97677133/f63e0996-8666-4666-b4e3-6991443f732c
+
 ## Getting Started
 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
